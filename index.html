@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" ng-app="Restaurant" ng-controller="AppController">
+<head>
+	<meta charset="utf-8">
+	<title>Front-end test - OpenTable</title>
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/angular.js"></script>
+	<script src="js/global.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8" ng-controller="MenuController">
+				<h2>Menu</h2>
+				<table ng-repeat="category in menu" class="table table-bordered">
+					<th colspan="3">{{ category.title }}</th>
+					<tr ng-repeat="item in category.items">
+						<td>{{ item.title }}</td>
+						<td>{{ item.price | currency:"&pound;" }}</td>
+						<td><input type="submit" value="Add to Order" ng-click="addToOrder(item, category)" ng-disabled="item.quantity == 0" class="btn btn-primary btn-xs"/></td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-md-4">
+				<h2>Order Details</h2>
+				<table class="table table-bordered" ng-repeat="person in party">
+					<th>{{ person.title }}</th><th><input type="button" value="Order for {{person.title}}"  class="btn btn-primary btn-xs" ng-click="changeOrderingFor($index)" ng-disabled="orderingFor == $index"/></th>
+					<tr ng-repeat="(key, value) in person.order"><td>{{key}}</td><td ng-repeat="item in value.items">{{ item.title }}</td></tr>
+				</table>
+				<input type="submit" value="Pay {{totalPrice | currency:'&pound;'}}" ng-disabled="orderCheck()" class="btn btn-primary" />
+			</div>
+		</div>
+	</div>
+</body>
+</html>
